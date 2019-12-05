@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker built -t jorakhachatryan/docker-react-aws -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true jorakhachatryan/docker-react-aws npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker"
+  env: "Docker-env"
